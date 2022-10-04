@@ -14,7 +14,7 @@ export default function GetInformation() {
           <input placeholder="DIgite seu CPF..." />
         </div>
       </PersonalInformation>
-      <SendData>Reservar assento (s)</SendData>
+      <SendData type="button">Reservar assento (s)</SendData>
     </>
   );
 }
@@ -55,7 +55,7 @@ const PersonalInformation = styled.section`
 const SendData = styled.button`
   width: 225px;
   height: 42px;
-  margin-top: 35px;
+  margin-top: 51px;
   background: #e8833a;
   border-radius: 3px;
   border: none;

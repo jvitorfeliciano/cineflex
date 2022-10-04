@@ -57,6 +57,7 @@ export default function ChooseSeat() {
 const ContainerValidation = styled.main`
   display: flex;
   margin-top: 67px;
+  margin-bottom: 150px;
   flex-direction: column;
   align-items: center;
   width: 100vw;

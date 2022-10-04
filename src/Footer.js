@@ -21,6 +21,7 @@ const FooterContainer = styled.footer`
   position: fixed;
   bottom: 0;
   left: 0;
+  z-index:2;
   display: flex;
   align-items: center;
   figure {
