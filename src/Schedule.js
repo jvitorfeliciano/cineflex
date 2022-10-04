@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import teste from "../src/assets/teste2.png";
+import Footer from "./Footer";
 export default function Schedule() {
   return (
     <>
@@ -20,12 +20,7 @@ export default function Schedule() {
           </div>
         </Date>
       </ScheduleContainer>
-      <Footer>
-        <figure>
-          <img src={teste} />
-        </figure>
-        <span>Enola Holmes</span>
-      </Footer>
+      <Footer/>
     </>
   );
 }
@@ -82,35 +77,4 @@ const Date = styled.section`
   }
 `;
 
-const Footer = styled.div`
-  width: 100vw;
-  height: 117px;
-  background: #dfe6ed;
-  border: 1px solid #9eadba;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  display: flex;
-  align-items: center;
-  figure {
-    width: 64px;
-    height: 89px;
-    padding: 8px;
-    background: #ffffff;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-    border-radius: 2px;
-    img {
-      width: 100%;
-      height: 100%;
-    }
-  }
-  span {
-    margin-left: 14px;
-    font-family: "Roboto";
-    font-style: normal;
-    font-weight: 400;
-    font-size: 26px;
-    line-height: 30px;
-    color: #293845;
-  }
-`;
+
