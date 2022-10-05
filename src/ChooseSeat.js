@@ -65,9 +65,6 @@ const ContainerValidation = styled.main`
   h1 {
     margin-top: 42px;
     margin-bottom: 23px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     background-color: #ffffff;
     font-style: normal;
     font-family: "Roboto";
@@ -80,7 +77,7 @@ const ContainerValidation = styled.main`
 `;
 
 const ButtonBox = styled.section`
-  width: 100vw;
+  width:100vw;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;

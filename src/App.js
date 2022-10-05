@@ -3,13 +3,14 @@ import Catalog from "./Catalog";
 import Header from "./Header";
 import Schedule from "./Schedule";
 import ChooseSeat from "./ChooseSeat";
-
+import Confirm from "./Confirm";
 export default function App() {
   return (
     <>
     <Globalstyle/>
       <Header />
-      <ChooseSeat/>
+      <Confirm/>
+    {/*   <ChooseSeat/> */}
    {/*     <Catalog />  */}
      {/*  <Schedule/>  */}
     </>
