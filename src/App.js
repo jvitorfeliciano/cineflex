@@ -4,15 +4,19 @@ import Header from "./Header";
 import Schedule from "./Schedule";
 import ChooseSeat from "./ChooseSeat";
 import Confirm from "./Confirm";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
 export default function App() {
   return (
-    <>
-    <Globalstyle/>
+    <BrowserRouter>
+      <Globalstyle />
       <Header />
-      <Confirm/>
-    {/*   <ChooseSeat/> */}
-   {/*     <Catalog />  */}
-     {/*  <Schedule/>  */}
-    </>
+      <Routes>
+        <Route path="/" element={<Catalog />} />
+        <Route path="/movie/:movieid" element={<Schedule />} />
+        <Route path="/section/:sectionid" element={<ChooseSeat />} />
+        <Route path="/sucsess" element={<Confirm />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
