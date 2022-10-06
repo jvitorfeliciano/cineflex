@@ -52,7 +52,7 @@ export default function Schedule() {
       </ScheduleContainer>
       <FooterContainer>
         <figure>
-          <img src={calender.PosterURL} />
+          <img src={calender.posterURL} />
         </figure>
         <span>{calender.title}</span>
       </FooterContainer>

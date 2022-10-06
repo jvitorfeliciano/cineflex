@@ -1,14 +1,30 @@
 import styled from "styled-components";
 
-export default function Seats() {
-  return <SeatButton type="button">01</SeatButton>;
+export default function Seats({ name, isAvailable }) {
+  return (
+    <SeatButton isAvailable={isAvailable} type="button">
+      {name}
+    </SeatButton>
+  );
 }
 
 const SeatButton = styled.button`
   width: 26px;
   height: 26px;
-  background: #c3cfd9;
-  border: 1px solid #808f9d;
+  background: ${(props) => {
+    if (props.isAvailable === true) {
+      return "#c3cfd9";
+    } else if (props.isAvailable === false) {
+      return "#FBE192";
+    }
+  }};
+  border: ${(props) => {
+    if (props.isAvailable === true) {
+      return "#c3cfd9";
+    } else if (props.isAvailable === false) {
+      return "#FBE192";
+    }
+  }};
   border-radius: 12px;
   font-family: "Roboto";
   font-style: normal;

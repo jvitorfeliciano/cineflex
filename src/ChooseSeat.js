@@ -1,37 +1,42 @@
 import styled from "styled-components";
-import Footer from "./Footer";
 import Seats from "./Seats";
+import loading from "../src/assets/loading.gif";
 import GetInformation from "./Getinformation";
+import axios from "axios";
+import { Link, useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
+
 export default function ChooseSeat() {
+const {sectionid} = useParams();
+const [seats, setSeats] =useState(null);
+
+useEffect(()=>{
+    const promise= axios.get(`https://mock-api.driven.com.br/api/v5/cineflex/showtimes/${sectionid}/seats`)
+    promise.then((res)=>{
+      console.log(res.data)
+      setSeats(res.data)
+    })
+    promise.catch((res)=> console.log(res.response.data))
+
+
+},[])
+
+if (seats === null) {
+  return (
+    <Loading>
+      <img src={loading} />
+    </Loading>
+  );
+}
+console.log(sectionid)
   return (
     <>
       <ContainerValidation>
         <h1>Selecione o(s) assento(s) </h1>
         <ButtonBox>
-          <Seats/>
-          <Seats/>
-          <Seats/>
-          <Seats/>
-          <Seats/>
-          <Seats/>
-          <Seats/>
-          <Seats/>
-          <Seats/>
-          <Seats/>
-          <Seats/>
-          <Seats/>
-          <Seats/>
-          <Seats/>
-          <Seats/>
-          <Seats/>
-          <Seats/>
-          <Seats/>
-          <Seats/>
-          <Seats/>
-          <Seats/>
-          <Seats/>
-          <Seats/>
-          <Seats/>
+          {seats.seats.map((obj, index)=>{ //quando usar chaves na arrow function e vc quiser retornar algo, é obrigado usar return
+           return (<Seats  key={index} name={obj.name} isAvailable={obj.isAvailable}/>)
+          })}
         </ButtonBox>
         <LegendBox>
           <Legend status="selected">
@@ -49,7 +54,12 @@ export default function ChooseSeat() {
         </LegendBox>
         <GetInformation/>
       </ContainerValidation>
-      <Footer />
+      <FooterContainer>
+        <figure>
+          <img src={seats.movie.posterURL} />
+        </figure>
+        <span>{seats.movie.title}<br></br>{seats.day.weekday} - {seats.name}</span>
+      </FooterContainer>
     </>
   );
 }
@@ -101,7 +111,7 @@ const Legend = styled.div`
     border-radius: 17px;
     background: ${(props) => {
       if (props.status === "selected") {
-        return "#8DD7CF";
+        return "#0E7D71";
       } else if (props.status === "available") {
         return "#C3CFD9";
       } else if (props.status === "unavailable") {
@@ -110,7 +120,7 @@ const Legend = styled.div`
     }};
     border: ${(props) => {
       if (props.status === "selected") {
-        return "1px solid #1AAE9E;";
+        return "1px solid #0E7D71";
       } else if (props.status === "available") {
         return "1px solid #7B8B99;";
       } else if (props.status === "unavailable") {
@@ -129,4 +139,47 @@ const Legend = styled.div`
   }
 `;
 
-
+const Loading = styled.section`
+  width:100vw;
+  height:100vh;
+  margin-top: 67px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  background: #ffffff;
+ `
+ const FooterContainer = styled.footer`
+ width: 100vw;
+ height: 117px;
+ background: #dfe6ed;
+ border: 1px solid #9eadba;
+ position: fixed;
+ bottom: 0;
+ left: 0;
+ z-index:2;
+ display: flex;
+ align-items: center;
+ figure {
+   margin-left: 10px;
+   width: 64px;
+   height: 89px;
+   padding: 8px;
+   background: #ffffff;
+   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+   border-radius: 2px;
+   img {
+     width: 100%;
+     height: 100%;
+   }
+ }
+ span {
+   margin-left: 14px;
+   font-family: "Roboto";
+   font-style: normal;
+   font-weight: 400;
+   font-size: 26px;
+   line-height: 30px;
+   color: #293845;
+ }
+`;
