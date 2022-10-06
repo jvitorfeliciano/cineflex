@@ -1,9 +1,10 @@
 import Globalstyle from "./Globostyle";
-import Catalog from "./Catalog";
+import infos from "./userPurchase";
+import CatalogPage from "./CatalogPage";
 import Header from "./Header";
-import Schedule from "./Schedule";
-import ChooseSeat from "./ChooseSeat";
-import Confirm from "./Confirm";
+import SchedulePage from "./SchedulePage";
+import ChooseSeatPage from "./ChooseSeatPage";
+import ConfirmPage from "./ConfirmPage";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 export default function App() {
@@ -12,10 +13,10 @@ export default function App() {
       <Globalstyle />
       <Header />
       <Routes>
-        <Route path="/" element={<Catalog />} />
-        <Route path="/movie/:movieid" element={<Schedule />} />
-        <Route path="/section/:sectionid" element={<ChooseSeat />} />
-        <Route path="/sucsess" element={<Confirm />} />
+        <Route path="/" element={<CatalogPage />} />
+        <Route path="/sessoes/:idFilme" element={<SchedulePage infos={infos}/>} />
+        <Route path="/assentos/:idSessao" element={<ChooseSeatPage infos={infos}/>} />
+        <Route path="/sucsess" element={<ConfirmPage />} />
       </Routes>
     </BrowserRouter>
   );

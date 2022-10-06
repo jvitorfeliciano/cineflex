@@ -6,15 +6,17 @@ import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 
-export default function ChooseSeat() {
-const {sectionid} = useParams();
+export default function ChooseSeat({infos}) {
+const {idSessao} = useParams();
 const [seats, setSeats] =useState(null);
 
 useEffect(()=>{
-    const promise= axios.get(`https://mock-api.driven.com.br/api/v5/cineflex/showtimes/${sectionid}/seats`)
+    const promise= axios.get(`https://mock-api.driven.com.br/api/v5/cineflex/showtimes/${idSessao}/seats`)
     promise.then((res)=>{
       console.log(res.data)
       setSeats(res.data)
+      infos.dateinfo = {date: res.data.day.date ,hour: res.data.name }
+      console.log(infos)
     })
     promise.catch((res)=> console.log(res.response.data))
 
@@ -28,14 +30,13 @@ if (seats === null) {
     </Loading>
   );
 }
-console.log(sectionid)
   return (
     <>
       <ContainerValidation>
         <h1>Selecione o(s) assento(s) </h1>
         <ButtonBox>
           {seats.seats.map((obj, index)=>{ //quando usar chaves na arrow function e vc quiser retornar algo, é obrigado usar return
-           return (<Seats  key={index} name={obj.name} isAvailable={obj.isAvailable}/>)
+           return (<Seats  key={index} informations={obj} />)
           })}
         </ButtonBox>
         <LegendBox>
@@ -58,7 +59,7 @@ console.log(sectionid)
         <figure>
           <img src={seats.movie.posterURL} />
         </figure>
-        <span>{seats.movie.title}<br></br>{seats.day.weekday} - {seats.name}</span>
+        <span>{seats.movie.title}<br></br>{seats.day.weekday} - {seats.day.date}- {seats.name}</span>
       </FooterContainer>
     </>
   );

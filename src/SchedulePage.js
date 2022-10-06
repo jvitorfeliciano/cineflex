@@ -4,16 +4,18 @@ import styled from "styled-components";
 import axios from "axios";
 import loading from "../src/assets/loading.gif";
 
-export default function Schedule() {
+export default function Schedule({infos}) {
   const [calender, setCalender] = useState(null);
-  const { movieid } = useParams();
+  const { idFilme } = useParams();
   useEffect(() => {
     const promise = axios.get(
-      `https://mock-api.driven.com.br/api/v8/cineflex/movies/${movieid}/showtimes`
+      `https://mock-api.driven.com.br/api/v8/cineflex/movies/${idFilme}/showtimes`
     );
     promise.then((res) => {
       console.log(res.data);
       setCalender(res.data);
+      infos.movie = res.data.title
+      console.log(infos)
     });
 
     promise.catch((res) => {
@@ -36,11 +38,11 @@ export default function Schedule() {
         {calender.days.map((obj, index) => {
           return (
             <Date key={index}>
-              <h3>{obj.weekday}</h3>
+              <h3>{obj.weekday} - {obj.date}</h3>
               <div>
                 {obj.showtimes.map((hour, index) => { // map para pegar os horários que estãoem array na propridade showtimes
                   return (
-                    <Link key={index} to={`/section/${hour.id}`}>
+                    <Link key={index} to={`/assentos/${hour.id}`}>
                          <button >{hour.name}</button>
                     </Link>
                   )
