@@ -6,7 +6,7 @@ import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 
-export default function ChooseSeat({infos}) {
+export default function ChooseSeat({infosPurchase, setObjInfosPurchase}) {
 const {idSessao} = useParams();
 const [seats, setSeats] =useState(null);
 
@@ -15,8 +15,9 @@ useEffect(()=>{
     promise.then((res)=>{
       console.log(res.data)
       setSeats(res.data)
-      infos.dateinfo = {date: res.data.day.date ,hour: res.data.name }
-      console.log(infos)
+      infosPurchase.date = res.data.day.date
+      infosPurchase.hour = res.data.name
+      console.log(infosPurchase)
     })
     promise.catch((res)=> console.log(res.response.data))
 
@@ -36,7 +37,7 @@ if (seats === null) {
         <h1>Selecione o(s) assento(s) </h1>
         <ButtonBox>
           {seats.seats.map((obj, index)=>{ //quando usar chaves na arrow function e vc quiser retornar algo, é obrigado usar return
-           return (<Seats  key={index} informations={obj} />)
+           return (<Seats  key={index} informations={obj} infosPurchase={infosPurchase}/>)
           })}
         </ButtonBox>
         <LegendBox>
@@ -53,7 +54,7 @@ if (seats === null) {
             <span>Indisponível</span>
           </Legend>
         </LegendBox>
-        <GetInformation/>
+        <GetInformation infosPurchase={infosPurchase} setObjInfosPurchase={setObjInfosPurchase}/>
       </ContainerValidation>
       <FooterContainer>
         <figure>

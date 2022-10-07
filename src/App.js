@@ -1,22 +1,25 @@
 import Globalstyle from "./Globostyle";
-import infos from "./userPurchase";
+import infosPurchase from "./userPurchase";
 import CatalogPage from "./CatalogPage";
 import Header from "./Header";
 import SchedulePage from "./SchedulePage";
 import ChooseSeatPage from "./ChooseSeatPage";
 import ConfirmPage from "./ConfirmPage";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useState } from "react";
 
 export default function App() {
+const [objInfosPurchase, setObjInfosPurchase] = useState({})
+
   return (
     <BrowserRouter>
       <Globalstyle />
       <Header />
       <Routes>
         <Route path="/" element={<CatalogPage />} />
-        <Route path="/sessoes/:idFilme" element={<SchedulePage infos={infos}/>} />
-        <Route path="/assentos/:idSessao" element={<ChooseSeatPage infos={infos}/>} />
-        <Route path="/sucsess" element={<ConfirmPage />} />
+        <Route path="/sessoes/:idFilme" element={<SchedulePage infosPurchase={infosPurchase}/>} />
+        <Route path="/assentos/:idSessao" element={<ChooseSeatPage infosPurchase={infosPurchase} setObjInfosPurchase={setObjInfosPurchase}/>} />
+        <Route path="/sucesso" element={<ConfirmPage objInfosPurchase={objInfosPurchase}/>} />
       </Routes>
     </BrowserRouter>
   );

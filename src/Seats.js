@@ -1,33 +1,43 @@
 import { useState } from "react";
 import styled from "styled-components";
 
-let seatsBoughtVector = []; // armazena o id do assento comprado, tem quer ser declarado aqui, se não toda vez que o componente Seats for renderizado, a array será esvaziada(teste realizado por mim);
-export default function Seats({ informations }) {
+let seatsBoughtVectorId = []; // armazena o id do assento comprado, tem quer ser declarado aqui, se não toda vez que o componente Seats for renderizado, a array será esvaziada(teste realizado por mim);
+let seatsBoughtVectorName = [];
+export default function Seats({ informations, infosPurchase }) {
   const {id, name, isAvailable} = informations // destructuring do objeto informations
  const [seatStatus, setSeatStatus]= useState(isAvailable ) // cada vez que o botão é chamado no map é criado um state pra cada botão;
 
 
- function handleSeat(seatid){
-  console.log(seatid)
+ function handleSeat(seatId,seatName){
+  console.log(seatId)
   if(seatStatus===false){
     alert('Esse assento não está disponível')
     return
   }
   else if(seatStatus==true){
     setSeatStatus('selected')
-    seatsBoughtVector=[...seatsBoughtVector, seatid]
-    console.log(seatsBoughtVector)
+    seatsBoughtVectorId =[...seatsBoughtVectorId, seatId]
+    seatsBoughtVectorName=[...seatsBoughtVectorName, seatName]
+    infosPurchase.seatsName=seatsBoughtVectorName
+    infosPurchase.seatsId = seatsBoughtVectorId
+    console.log(seatsBoughtVectorId, seatsBoughtVectorName)
+    
   }
   else if(seatStatus=='selected'){
     setSeatStatus(true)
-    const aux = seatsBoughtVector.filter(element => element !== seatid)
-    seatsBoughtVector=[...aux]
-    console.log(seatsBoughtVector)
+    const auxOne = seatsBoughtVectorId.filter(element => element !== seatId)
+    seatsBoughtVectorId =[...auxOne]
+    const auxTwo =  seatsBoughtVectorName.filter(element => element !==seatName)
+    seatsBoughtVectorName = [...auxTwo]
+    infosPurchase.seatsName=seatsBoughtVectorName 
+    infosPurchase.seatsId = seatsBoughtVectorId
+    console.log(seatsBoughtVectorId, seatsBoughtVectorName  )
+    
   }
  }
 
   return (
-    <SeatButton onClick={()=>handleSeat(id)} seatStatus={seatStatus} type="button">
+    <SeatButton onClick={()=>handleSeat(id,name)} seatStatus={seatStatus} type="button">
       {name}
     </SeatButton>
   );

@@ -4,7 +4,7 @@ import styled from "styled-components";
 import axios from "axios";
 import loading from "../src/assets/loading.gif";
 
-export default function Schedule({infos}) {
+export default function Schedule({infosPurchase}) {
   const [calender, setCalender] = useState(null);
   const { idFilme } = useParams();
   useEffect(() => {
@@ -14,8 +14,8 @@ export default function Schedule({infos}) {
     promise.then((res) => {
       console.log(res.data);
       setCalender(res.data);
-      infos.movie = res.data.title
-      console.log(infos)
+      infosPurchase.movie = res.data.title
+      console.log(infosPurchase)
     });
 
     promise.catch((res) => {
