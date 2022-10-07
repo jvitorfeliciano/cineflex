@@ -7,8 +7,8 @@ export default function Confirm({objInfosPurchase}) {
 
   function goHome(){
     navigate("/")
-    objInfosPurchase = {}
-    console.log(objInfosPurchase)
+    objInfosPurchase.seatsName=[];
+    objInfosPurchase.seatsId =[];
   }
   if(objInfosPurchase.seatsName===undefined){
     return (<GoHome onClick={goHome}>Voltar para home</GoHome>)// para voltar no início do site caso o  usuário aperte f5, senão quebraria o código, pois quando aperta f5 a array seatsName se torna undefined
@@ -28,8 +28,8 @@ export default function Confirm({objInfosPurchase}) {
       </section>
       <section>
         <h2>Comprador</h2>
-        <div>nome:{objInfosPurchase.buyerName}</div>
-        <div>CPF:{objInfosPurchase.buyerCpf}</div>
+        <div>nome: {objInfosPurchase.buyerName}</div>
+        <div>CPF: {objInfosPurchase.buyerCpf}</div>
       </section>
       <button onClick={goHome} type="button">Voltar para home</button>
     </ContainerConfirm>

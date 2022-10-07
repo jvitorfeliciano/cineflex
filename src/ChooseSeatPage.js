@@ -6,7 +6,8 @@ import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 
-export default function ChooseSeat({infosPurchase, setObjInfosPurchase}) {
+
+export default function ChooseSeat({infosPurchase, setObjInfosPurchase,seatsBoughtVectorName, seatsBoughtVectorId}) {
 const {idSessao} = useParams();
 const [seats, setSeats] =useState(null);
 
@@ -37,7 +38,7 @@ if (seats === null) {
         <h1>Selecione o(s) assento(s) </h1>
         <ButtonBox>
           {seats.seats.map((obj, index)=>{ //quando usar chaves na arrow function e vc quiser retornar algo, é obrigado usar return
-           return (<Seats  key={index} informations={obj} infosPurchase={infosPurchase}/>)
+           return (<Seats  key={index} informations={obj} infosPurchase={infosPurchase} seatsBoughtVectorName={seatsBoughtVectorName} seatsBoughtVectorId={seatsBoughtVectorId}/>)
           })}
         </ButtonBox>
         <LegendBox>

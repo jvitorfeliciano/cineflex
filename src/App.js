@@ -10,7 +10,7 @@ import { useState } from "react";
 
 export default function App() {
 const [objInfosPurchase, setObjInfosPurchase] = useState({})
-
+console.log(infosPurchase)
   return (
     <BrowserRouter>
       <Globalstyle />
@@ -18,8 +18,8 @@ const [objInfosPurchase, setObjInfosPurchase] = useState({})
       <Routes>
         <Route path="/" element={<CatalogPage />} />
         <Route path="/sessoes/:idFilme" element={<SchedulePage infosPurchase={infosPurchase}/>} />
-        <Route path="/assentos/:idSessao" element={<ChooseSeatPage infosPurchase={infosPurchase} setObjInfosPurchase={setObjInfosPurchase}/>} />
-        <Route path="/sucesso" element={<ConfirmPage objInfosPurchase={objInfosPurchase}/>} />
+        <Route path="/assentos/:idSessao" element={<ChooseSeatPage infosPurchase={infosPurchase} setObjInfosPurchase={setObjInfosPurchase} />} />
+        <Route path="/sucesso" element={<ConfirmPage objInfosPurchase={objInfosPurchase} />} />
       </Routes>
     </BrowserRouter>
   );

@@ -1,8 +1,8 @@
 import { useState } from "react";
 import styled from "styled-components";
 
-let seatsBoughtVectorId = []; // armazena o id do assento comprado, tem quer ser declarado aqui, se não toda vez que o componente Seats for renderizado, a array será esvaziada(teste realizado por mim);
-let seatsBoughtVectorName = [];
+/* let seatsBoughtVectorId = []; // armazena o id do assento comprado, tem quer ser declarado aqui, se não toda vez que o componente Seats for renderizado, a array será esvaziada(teste realizado por mim);
+let seatsBoughtVectorName = []; */
 export default function Seats({ informations, infosPurchase }) {
   const {id, name, isAvailable} = informations // destructuring do objeto informations
  const [seatStatus, setSeatStatus]= useState(isAvailable ) // cada vez que o botão é chamado no map é criado um state pra cada botão;
@@ -16,22 +16,18 @@ export default function Seats({ informations, infosPurchase }) {
   }
   else if(seatStatus==true){
     setSeatStatus('selected')
-    seatsBoughtVectorId =[...seatsBoughtVectorId, seatId]
-    seatsBoughtVectorName=[...seatsBoughtVectorName, seatName]
-    infosPurchase.seatsName=seatsBoughtVectorName
-    infosPurchase.seatsId = seatsBoughtVectorId
-    console.log(seatsBoughtVectorId, seatsBoughtVectorName)
+    infosPurchase.seatsId =[...infosPurchase.seatsId, seatId]
+    infosPurchase.seatsName=[...infosPurchase.seatsName, seatName]
+    console.log(infosPurchase.seatsId, infosPurchase.seatsName)
     
   }
   else if(seatStatus=='selected'){
     setSeatStatus(true)
-    const auxOne = seatsBoughtVectorId.filter(element => element !== seatId)
-    seatsBoughtVectorId =[...auxOne]
-    const auxTwo =  seatsBoughtVectorName.filter(element => element !==seatName)
-    seatsBoughtVectorName = [...auxTwo]
-    infosPurchase.seatsName=seatsBoughtVectorName 
-    infosPurchase.seatsId = seatsBoughtVectorId
-    console.log(seatsBoughtVectorId, seatsBoughtVectorName  )
+    const auxOne = infosPurchase.seatsId.filter(element => element !== seatId)
+    infosPurchase.seatsId =[...auxOne]
+    const auxTwo =  infosPurchase.seatsName.filter(element => element !==seatName)
+    infosPurchase.seatsName = [...auxTwo]
+    console.log(infosPurchase.seatsName, infosPurchase.seatsId  )
     
   }
  }
