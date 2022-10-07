@@ -5,40 +5,49 @@ import GetInformation from "./Getinformation";
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
+import WarningScreen from "./WarningScreen";
+export default function ChooseSeat({ infosPurchase, setObjInfosPurchase }) {
+  const { idSessao } = useParams();
+  const [seats, setSeats] = useState(null);
+  const [activeWarningScreen, setActiveWarningScreen] = useState(false);
+  useEffect(() => {
+    const promise = axios.get(
+      `https://mock-api.driven.com.br/api/v5/cineflex/showtimes/${idSessao}/seats`
+    );
+    promise.then((res) => {
+      console.log(res.data);
+      setSeats(res.data);
+      infosPurchase.date = res.data.day.date;
+      infosPurchase.hour = res.data.name;
+      console.log(infosPurchase);
+    });
+    promise.catch((res) => console.log(res.response.data));
+  }, []);
 
-
-export default function ChooseSeat({infosPurchase, setObjInfosPurchase,seatsBoughtVectorName, seatsBoughtVectorId}) {
-const {idSessao} = useParams();
-const [seats, setSeats] =useState(null);
-
-useEffect(()=>{
-    const promise= axios.get(`https://mock-api.driven.com.br/api/v5/cineflex/showtimes/${idSessao}/seats`)
-    promise.then((res)=>{
-      console.log(res.data)
-      setSeats(res.data)
-      infosPurchase.date = res.data.day.date
-      infosPurchase.hour = res.data.name
-      console.log(infosPurchase)
-    })
-    promise.catch((res)=> console.log(res.response.data))
-
-
-},[])
-
-if (seats === null) {
-  return (
-    <Loading>
-      <img src={loading} />
-    </Loading>
-  );
-}
+  if (seats === null) {
+    return (
+      <Loading>
+        <img src={loading} />
+      </Loading>
+    );
+  }
   return (
     <>
+      {activeWarningScreen && <WarningScreen  setActiveWarningScreen={setActiveWarningScreen}/>}
+
       <ContainerValidation>
         <h1>Selecione o(s) assento(s) </h1>
         <ButtonBox>
-          {seats.seats.map((obj, index)=>{ //quando usar chaves na arrow function e vc quiser retornar algo, é obrigado usar return
-           return (<Seats  key={index} informations={obj} infosPurchase={infosPurchase} seatsBoughtVectorName={seatsBoughtVectorName} seatsBoughtVectorId={seatsBoughtVectorId}/>)
+          {seats.seats.map((obj, index) => {
+            //quando usar chaves na arrow function e vc quiser retornar algo, é obrigado usar return
+            return (
+              <Seats
+                key={index}
+                informations={obj}
+                infosPurchase={infosPurchase}
+                setActiveWarningScreen={setActiveWarningScreen}
+              />
+            );
           })}
         </ButtonBox>
         <LegendBox>
@@ -55,13 +64,20 @@ if (seats === null) {
             <span>Indisponível</span>
           </Legend>
         </LegendBox>
-        <GetInformation infosPurchase={infosPurchase} setObjInfosPurchase={setObjInfosPurchase}/>
+        <GetInformation
+          infosPurchase={infosPurchase}
+          setObjInfosPurchase={setObjInfosPurchase}
+        />
       </ContainerValidation>
       <FooterContainer>
         <figure>
           <img src={seats.movie.posterURL} />
         </figure>
-        <span>{seats.movie.title}<br></br>{seats.day.weekday} - {seats.day.date}- {seats.name}</span>
+        <span>
+          {seats.movie.title}
+          <br></br>
+          {seats.day.weekday} - {seats.day.date}- {seats.name}
+        </span>
       </FooterContainer>
     </>
   );
@@ -70,7 +86,7 @@ if (seats === null) {
 const ContainerValidation = styled.main`
   display: flex;
   margin-top: 67px;
-  margin-bottom: 150px;
+  margin-bottom: 300px;
   flex-direction: column;
   align-items: center;
   width: 100vw;
@@ -90,7 +106,7 @@ const ContainerValidation = styled.main`
 `;
 
 const ButtonBox = styled.section`
-  width:100vw;
+  width: 100vw;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -143,46 +159,46 @@ const Legend = styled.div`
 `;
 
 const Loading = styled.section`
-  width:100vw;
-  height:100vh;
+  width: 100vw;
+  height: 100vh;
   margin-top: 67px;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100vw;
   background: #ffffff;
- `
- const FooterContainer = styled.footer`
- width: 100vw;
- height: 117px;
- background: #dfe6ed;
- border: 1px solid #9eadba;
- position: fixed;
- bottom: 0;
- left: 0;
- z-index:2;
- display: flex;
- align-items: center;
- figure {
-   margin-left: 10px;
-   width: 64px;
-   height: 89px;
-   padding: 8px;
-   background: #ffffff;
-   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-   border-radius: 2px;
-   img {
-     width: 100%;
-     height: 100%;
-   }
- }
- span {
-   margin-left: 14px;
-   font-family: "Roboto";
-   font-style: normal;
-   font-weight: 400;
-   font-size: 26px;
-   line-height: 30px;
-   color: #293845;
- }
+`;
+const FooterContainer = styled.footer`
+  width: 100vw;
+  height: 117px;
+  background: #dfe6ed;
+  border: 1px solid #9eadba;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  figure {
+    margin-left: 10px;
+    width: 64px;
+    height: 89px;
+    padding: 8px;
+    background: #ffffff;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 2px;
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+  span {
+    margin-left: 14px;
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 26px;
+    line-height: 30px;
+    color: #293845;
+  }
 `;

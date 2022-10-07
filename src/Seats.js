@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 /* let seatsBoughtVectorId = []; // armazena o id do assento comprado, tem quer ser declarado aqui, se não toda vez que o componente Seats for renderizado, a array será esvaziada(teste realizado por mim);
 let seatsBoughtVectorName = []; */
-export default function Seats({ informations, infosPurchase }) {
+export default function Seats({ informations, infosPurchase,setActiveWarningScreen }) {
   const {id, name, isAvailable} = informations // destructuring do objeto informations
  const [seatStatus, setSeatStatus]= useState(isAvailable ) // cada vez que o botão é chamado no map é criado um state pra cada botão;
 
@@ -11,7 +11,7 @@ export default function Seats({ informations, infosPurchase }) {
  function handleSeat(seatId,seatName){
   console.log(seatId)
   if(seatStatus===false){
-    alert('Esse assento não está disponível')
+    setActiveWarningScreen(true)
     return
   }
   else if(seatStatus==true){

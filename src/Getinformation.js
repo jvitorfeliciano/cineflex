@@ -58,7 +58,7 @@ export default function GetInformation({ infosPurchase, setObjInfosPurchase }) {
             name="cpf"
             required
             id="cpf"
-            placeholder="DIgite seu CPF..."
+            placeholder="Digite seu CPF..."
           />
         </div>
         <SendData type="submit">Reservar assento (s)</SendData>
@@ -89,6 +89,13 @@ const PersonalInformation = styled.section`
     font-size: 18px;
     line-height: 21px;
     color: #afafaf;
+    &:focus{
+      font-style: normal;
+      color:black;
+      border:none;
+      outline: 2px solid #c3cfd9;
+      font-family: "Roboto";
+    }
   }
   label {
     font-family: "Roboto";

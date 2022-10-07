@@ -1,17 +1,23 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-export default function Confirm({objInfosPurchase}) {
-  console.log(objInfosPurchase)
-  const navigate = useNavigate()  // permite navegar facilmente entre as pages, só utilizar navigate("aqui vai o caminho da page")
+export default function Confirm({ objInfosPurchase }) {
+  console.log(objInfosPurchase);
+  const navigate = useNavigate(); // permite navegar facilmente entre as pages, só utilizar navigate("aqui vai o caminho da page")
 
-  function goHome(){
-    navigate("/")
-    objInfosPurchase.seatsName=[];
-    objInfosPurchase.seatsId =[];
+  function goHome() {
+    objInfosPurchase.seatsName = [];
+    objInfosPurchase.seatsId = [];
+    objInfosPurchase.movie = "";
+    objInfosPurchase.date = "";
+    objInfosPurchase.hour = "";
+    objInfosPurchase.buyerName = "";
+    objInfosPurchase.buyerCpf = "";
+    console.log(objInfosPurchase);
+    navigate("/");
   }
-  if(objInfosPurchase.seatsName===undefined){
-    return (<GoHome onClick={goHome}>Voltar para home</GoHome>)// para voltar no início do site caso o  usuário aperte f5, senão quebraria o código, pois quando aperta f5 a array seatsName se torna undefined
+  if (objInfosPurchase.seatsName === undefined) {
+    return <GoHome onClick={goHome}>Voltar para home</GoHome>; // para voltar no início do site caso o  usuário aperte f5, senão quebraria o código, pois quando aperta f5 a array seatsName se torna undefined
   }
 
   return (
@@ -20,18 +26,24 @@ export default function Confirm({objInfosPurchase}) {
       <section>
         <h2>Filme e sessão</h2>
         <div>{objInfosPurchase.movie}</div>
-        <div>{objInfosPurchase.date} {objInfosPurchase.hour}</div>
+        <div>
+          {objInfosPurchase.date} {objInfosPurchase.hour}
+        </div>
       </section>
       <section>
         <h2>Ingressos</h2>
-        {objInfosPurchase.seatsName.map(((element,index) => ( <div key={index}>Assento {element}</div>)))} 
+        {objInfosPurchase.seatsName.map((element, index) => (
+          <div key={index}>Assento {element}</div>
+        ))}
       </section>
       <section>
         <h2>Comprador</h2>
         <div>nome: {objInfosPurchase.buyerName}</div>
         <div>CPF: {objInfosPurchase.buyerCpf}</div>
       </section>
-      <button onClick={goHome} type="button">Voltar para home</button>
+      <button onClick={goHome} type="button">
+        Voltar para home
+      </button>
     </ContainerConfirm>
   );
 }
@@ -105,6 +117,5 @@ const ContainerConfirm = styled.div`
   }
 `;
 const GoHome = styled.button`
-    margin-top: 80px;
-
-`
+  margin-top: 80px;
+`;
