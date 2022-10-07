@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-export default function GetInformation({ infosPurchase, setObjInfosPurchase }) {
+export default function GetInformation({ infosPurchase, setObjInfosPurchase,setActiveWarningScreen }) {
   const [form, setForm] = useState({ name: "", cpf: "" });
   const navigate = useNavigate()
   function handleForm(e) {
@@ -17,7 +17,7 @@ export default function GetInformation({ infosPurchase, setObjInfosPurchase }) {
       infosPurchase.seatsId === undefined ||
       infosPurchase.seatsId.length === 0
     ) {
-      alert("Escolha os assentos");
+      setActiveWarningScreen('noSeatChosen');
       return;
     }
     const body = { ids: infosPurchase.seatsId, name: form.name, cpf: form.cpf };

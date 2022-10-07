@@ -1,12 +1,13 @@
 import styled from "styled-components";
 
-export default function WarningScreen({setActiveWarningScreen}) {
+export default function WarningScreen({setActiveWarningScreen, activeWarningScreen}) {
   return (
     <>
       <WarningScreenContainer></WarningScreenContainer>
       <Warn>
-        <span>Escolha um assento disponível</span>
-        <button onClick={()=>setActiveWarningScreen(false)}>OK</button>
+       { activeWarningScreen==="seatIsChosen" && <span>Escolha um assento disponível</span> }
+       { activeWarningScreen==="noSeatChosen" && <span>Escolha pelo menos um assento</span> }
+        <button onClick={()=>setActiveWarningScreen('none')}>OK</button>
       </Warn>
     </>
   );
@@ -32,14 +33,14 @@ const Warn = styled.div`
   height: 150px;
   background: #ffffff;
   opacity: 1;
-  border-radius: 10px;
   font-size: 18px;
   font-family: "Roboto";
   position: fixed;
   z-index: 5;
   top: 20%;
   right: 10%;
-  font-weight: bold;
+  font-weight: 400;
+  border-radius: 3px;
   letter-spacing: 1px;
   button {
     width: 70px;
@@ -50,7 +51,7 @@ const Warn = styled.div`
     border: none;
     font-weight: bold;
     font-family: "Roboto";
-    background: red;
+    background: #89d4f7;
     border-radius: 5px;
     font-size: 16px;
     color: #ffffff;

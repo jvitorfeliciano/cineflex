@@ -11,7 +11,7 @@ export default function Seats({ informations, infosPurchase,setActiveWarningScre
  function handleSeat(seatId,seatName){
   console.log(seatId)
   if(seatStatus===false){
-    setActiveWarningScreen(true)
+    setActiveWarningScreen("seatIsChosen")
     return
   }
   else if(seatStatus==true){

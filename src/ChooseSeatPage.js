@@ -9,7 +9,7 @@ import WarningScreen from "./WarningScreen";
 export default function ChooseSeat({ infosPurchase, setObjInfosPurchase }) {
   const { idSessao } = useParams();
   const [seats, setSeats] = useState(null);
-  const [activeWarningScreen, setActiveWarningScreen] = useState(false);
+  const [activeWarningScreen, setActiveWarningScreen] = useState('');
   useEffect(() => {
     const promise = axios.get(
       `https://mock-api.driven.com.br/api/v5/cineflex/showtimes/${idSessao}/seats`
@@ -33,8 +33,12 @@ export default function ChooseSeat({ infosPurchase, setObjInfosPurchase }) {
   }
   return (
     <>
-      {activeWarningScreen && <WarningScreen  setActiveWarningScreen={setActiveWarningScreen}/>}
-
+      {activeWarningScreen ==="seatIsChosen" && (
+        <WarningScreen activeWarningScreen={activeWarningScreen} setActiveWarningScreen={setActiveWarningScreen} />
+      )}
+       {activeWarningScreen ==="noSeatChosen" && (
+        <WarningScreen activeWarningScreen={activeWarningScreen} setActiveWarningScreen={setActiveWarningScreen} />
+      )}
       <ContainerValidation>
         <h1>Selecione o(s) assento(s) </h1>
         <ButtonBox>
@@ -67,6 +71,7 @@ export default function ChooseSeat({ infosPurchase, setObjInfosPurchase }) {
         <GetInformation
           infosPurchase={infosPurchase}
           setObjInfosPurchase={setObjInfosPurchase}
+          setActiveWarningScreen={setActiveWarningScreen}
         />
       </ContainerValidation>
       <FooterContainer>
@@ -173,7 +178,7 @@ const FooterContainer = styled.footer`
   height: 117px;
   background: #dfe6ed;
   border: 1px solid #9eadba;
-  position: absolute;
+  position: fixed;
   bottom: 0;
   left: 0;
   z-index: 2;
