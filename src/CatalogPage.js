@@ -51,6 +51,7 @@ const CatalogContainer = styled.main`
     margin-bottom: 35px;
     background-color: #ffffff;
     font-style: normal;
+    font-family: "Roboto";
     font-weight: 400;
     font-size: 24px;
     line-height: 28px;
