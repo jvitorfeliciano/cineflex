@@ -35,7 +35,7 @@ export default function Schedule() {
 
         {calender.days.map((obj, index) => {
           return (
-            <Date key={index}>
+            <DateContainer key={index}>
               <h3 data-identifier="session-date">
                 {obj.weekday} - {obj.date}
               </h3>
@@ -51,7 +51,7 @@ export default function Schedule() {
                   );
                 })}
               </div>
-            </Date>
+            </DateContainer>
           );
         })}
       </ScheduleContainer>
@@ -87,7 +87,7 @@ const ScheduleContainer = styled.main`
   }
 `;
 
-const Date = styled.section`
+const DateContainer = styled.section`
   height: 100px;
   margin-left: 23px;
   margin-bottom: 23px;
