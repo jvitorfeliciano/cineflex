@@ -1,13 +1,22 @@
 import styled from "styled-components";
 
-export default function WarningScreen({setActiveWarningScreen, activeWarningScreen}) {
+export default function WarningScreen({
+  setActiveWarningScreen,
+  activeWarningScreen,
+}) {
   return (
     <>
-      <WarningScreenContainer></WarningScreenContainer>
+      <WarningScreenContainer
+        onClick={() => setActiveWarningScreen("none")}
+      ></WarningScreenContainer>
       <Warn>
-       { activeWarningScreen==="seatIsChosen" && <span>Escolha um assento disponível</span> }
-       { activeWarningScreen==="noSeatChosen" && <span>Escolha pelo menos um assento</span> }
-        <button onClick={()=>setActiveWarningScreen('none')}>OK</button>
+        {activeWarningScreen === "seatIsChosen" && (
+          <span>Escolha um assento disponível</span>
+        )}
+        {activeWarningScreen === "noSeatChosen" && (
+          <span>Escolha um assento</span>
+        )}
+        <button onClick={() => setActiveWarningScreen("none")}>OK</button>
       </Warn>
     </>
   );

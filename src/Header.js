@@ -17,16 +17,16 @@ const HeaderContainer = styled.header`
   display: flex;
   align-items: center;
   justify-content: center;
-  position:fixed;
+  position: fixed;
   z-index: 2;
-  top:0;
-  left:0;
+  top: 0;
+  left: 0;
   h1 {
     font-family: "Roboto";
     font-style: normal;
     font-weight: 400;
     font-size: 34px;
     line-height: 40px;
-    color: #E8833A;
+    color: #e8833a;
   }
 `;

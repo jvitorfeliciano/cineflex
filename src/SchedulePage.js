@@ -4,7 +4,7 @@ import styled from "styled-components";
 import axios from "axios";
 import loading from "../src/assets/loading.gif";
 
-export default function Schedule({infosPurchase}) {
+export default function Schedule() {
   const [calender, setCalender] = useState(null);
   const { idFilme } = useParams();
   useEffect(() => {
@@ -14,8 +14,6 @@ export default function Schedule({infosPurchase}) {
     promise.then((res) => {
       console.log(res.data);
       setCalender(res.data);
-      infosPurchase.movie = res.data.title
-      console.log(infosPurchase)
     });
 
     promise.catch((res) => {
@@ -38,14 +36,19 @@ export default function Schedule({infosPurchase}) {
         {calender.days.map((obj, index) => {
           return (
             <Date key={index}>
-              <h3>{obj.weekday} - {obj.date}</h3>
+              <h3 data-identifier="session-date">
+                {obj.weekday} - {obj.date}
+              </h3>
               <div>
-                {obj.showtimes.map((hour, index) => { // map para pegar os horários que estãoem array na propridade showtimes
+                {obj.showtimes.map((hour, index) => {
+                  // map para pegar os horários que estãoem array na propridade showtimes
                   return (
                     <Link key={index} to={`/assentos/${hour.id}`}>
-                         <button >{hour.name}</button>
+                      <button data-identifier="hour-minute-btn">
+                        {hour.name}
+                      </button>
                     </Link>
-                  )
+                  );
                 })}
               </div>
             </Date>
@@ -53,10 +56,12 @@ export default function Schedule({infosPurchase}) {
         })}
       </ScheduleContainer>
       <FooterContainer>
-        <figure>
+        <figure data-identifier="movie-img-preview">
           <img src={calender.posterURL} />
         </figure>
-        <span>{calender.title}</span>
+        <span data-identifier="movie-and-session-infos-preview">
+          {calender.title}
+        </span>
       </FooterContainer>
     </>
   );

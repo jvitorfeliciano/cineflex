@@ -3,13 +3,13 @@ import Seats from "./Seats";
 import loading from "../src/assets/loading.gif";
 import GetInformation from "./Getinformation";
 import axios from "axios";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import WarningScreen from "./WarningScreen";
-export default function ChooseSeat({ infosPurchase, setObjInfosPurchase }) {
+export default function ChooseSeat({ infosPurchase }) {
   const { idSessao } = useParams();
   const [seats, setSeats] = useState(null);
-  const [activeWarningScreen, setActiveWarningScreen] = useState('');
+  const [activeWarningScreen, setActiveWarningScreen] = useState("");
   useEffect(() => {
     const promise = axios.get(
       `https://mock-api.driven.com.br/api/v5/cineflex/showtimes/${idSessao}/seats`
@@ -17,6 +17,7 @@ export default function ChooseSeat({ infosPurchase, setObjInfosPurchase }) {
     promise.then((res) => {
       console.log(res.data);
       setSeats(res.data);
+      infosPurchase.movie = res.data.movie.title;
       infosPurchase.date = res.data.day.date;
       infosPurchase.hour = res.data.name;
       console.log(infosPurchase);
@@ -33,11 +34,17 @@ export default function ChooseSeat({ infosPurchase, setObjInfosPurchase }) {
   }
   return (
     <>
-      {activeWarningScreen ==="seatIsChosen" && (
-        <WarningScreen activeWarningScreen={activeWarningScreen} setActiveWarningScreen={setActiveWarningScreen} />
+      {activeWarningScreen === "seatIsChosen" && (
+        <WarningScreen
+          activeWarningScreen={activeWarningScreen}
+          setActiveWarningScreen={setActiveWarningScreen}
+        />
       )}
-       {activeWarningScreen ==="noSeatChosen" && (
-        <WarningScreen activeWarningScreen={activeWarningScreen} setActiveWarningScreen={setActiveWarningScreen} />
+      {activeWarningScreen === "noSeatChosen" && (
+        <WarningScreen
+          activeWarningScreen={activeWarningScreen}
+          setActiveWarningScreen={setActiveWarningScreen}
+        />
       )}
       <ContainerValidation>
         <h1>Selecione o(s) assento(s) </h1>
@@ -55,30 +62,32 @@ export default function ChooseSeat({ infosPurchase, setObjInfosPurchase }) {
           })}
         </ButtonBox>
         <LegendBox>
-          <Legend status="selected">
+          <Legend data-identifier="seat-selected-subtitle" status="selected">
             <div></div>
             <span>Selecionado</span>
           </Legend>
-          <Legend status="available">
+          <Legend data-identifier="seat-available-subtitle" status="available">
             <div></div>
             <span>Disponível</span>
           </Legend>
-          <Legend status="unavailable">
+          <Legend
+            data-identifier="seat-unavailable-subtitle"
+            status="unavailable"
+          >
             <div></div>
             <span>Indisponível</span>
           </Legend>
         </LegendBox>
         <GetInformation
           infosPurchase={infosPurchase}
-          setObjInfosPurchase={setObjInfosPurchase}
           setActiveWarningScreen={setActiveWarningScreen}
         />
       </ContainerValidation>
       <FooterContainer>
-        <figure>
+        <figure data-identifier="movie-img-preview">
           <img src={seats.movie.posterURL} />
         </figure>
-        <span>
+        <span data-identifier="movie-and-session-infos-preview">
           {seats.movie.title}
           <br></br>
           {seats.day.weekday} - {seats.day.date}- {seats.name}

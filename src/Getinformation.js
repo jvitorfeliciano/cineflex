@@ -1,11 +1,14 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-export default function GetInformation({ infosPurchase, setObjInfosPurchase,setActiveWarningScreen }) {
+export default function GetInformation({
+  infosPurchase,
+  setActiveWarningScreen,
+}) {
   const [form, setForm] = useState({ name: "", cpf: "" });
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   function handleForm(e) {
     setForm({ ...form, [e.target.name]: e.target.value });
     console.log(form);
@@ -17,21 +20,27 @@ export default function GetInformation({ infosPurchase, setObjInfosPurchase,setA
       infosPurchase.seatsId === undefined ||
       infosPurchase.seatsId.length === 0
     ) {
-      setActiveWarningScreen('noSeatChosen');
+      setActiveWarningScreen("noSeatChosen");
       return;
     }
-    const body = { ids: infosPurchase.seatsId, name: form.name, cpf: form.cpf };
+    const body = {
+      ids: infosPurchase.seatsId,
+      name: form.name,
+      cpf: form.cpf.replaceAll(".", "").replaceAll("-", ""),
+    };
     const URL =
       "https://mock-api.driven.com.br/api/v5/cineflex/seats/book-many";
 
     const promise = axios.post(URL, body);
-    promise.then((res) => {  // se a requisição der certo, então farei tudo o que segue:
-      infosPurchase.buyerName = form.name
-      infosPurchase.buyerCpf = form.cpf
-      console.log(infosPurchase)
-      setObjInfosPurchase(infosPurchase)
-      navigate("/sucesso")
-      console.log(res.data)});
+    promise.then((res) => {
+      // se a requisição der certo, então farei tudo o que segue:
+      infosPurchase.buyerName = form.name;
+      infosPurchase.buyerCpf = form.cpf;
+      console.log(infosPurchase);
+      /*  setObjInfosPurchase(infosPurchase) */
+      navigate("/sucesso", { state: infosPurchase }); //  o state é obrigatório, é passado uma referência do objeto infosPurchase para o state
+      console.log(res.data);
+    });
     promise.catch((err) => console.log(err.response.data));
   }
 
@@ -42,6 +51,7 @@ export default function GetInformation({ infosPurchase, setObjInfosPurchase,setA
           <label htmlFor="name">Nome do comprador:</label>
           <br></br>
           <input
+            data-identifier="buyer-name-input"
             onChange={handleForm}
             value={form.name}
             name="name"
@@ -53,15 +63,19 @@ export default function GetInformation({ infosPurchase, setObjInfosPurchase,setA
           <label htmlFor="CPF">CPF do comprador:</label>
           <br></br>
           <input
+            data-identifier="buyer-cpf-input"
             onChange={handleForm}
             value={form.cpf}
             name="cpf"
             required
             id="cpf"
-            placeholder="Digite seu CPF..."
+            pattern="\d{3}\.\d{3}\.\d{3}-\d{2}"
+            placeholder="Digite o CPF: nnn.nnn.nnn-nn"
           />
         </div>
-        <SendData type="submit">Reservar assento (s)</SendData>
+        <SendData data-identifier="reservation-btn" type="submit">
+          Reservar assento (s)
+        </SendData>
       </form>
     </PersonalInformation>
   );
@@ -89,10 +103,10 @@ const PersonalInformation = styled.section`
     font-size: 18px;
     line-height: 21px;
     color: #afafaf;
-    &:focus{
+    &:focus {
       font-style: normal;
-      color:black;
-      border:none;
+      color: black;
+      border: none;
       outline: 2px solid #c3cfd9;
       font-family: "Roboto";
     }

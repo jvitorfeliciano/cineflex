@@ -26,7 +26,12 @@ export default function Catalog() {
           <h2>Selecione o filme</h2>
           <MovieList>
             {movieVector.map((obj) => (
-              <Movie key={obj.id} img={obj.posterURL} title={obj.title} id={obj.id} />
+              <Movie
+                key={obj.id}
+                img={obj.posterURL}
+                title={obj.title}
+                id={obj.id}
+              />
             ))}
           </MovieList>
         </CatalogContainer>
@@ -37,7 +42,7 @@ export default function Catalog() {
 
 const CatalogContainer = styled.main`
   display: flex;
-  width:100vw;
+  width: 100vw;
   margin-top: 67px;
   flex-direction: column;
   align-items: center;
@@ -62,14 +67,13 @@ const MovieList = styled.section`
   width: 100%;
   justify-content: space-around;
 `;
- const Loading = styled.section`
-  width:100vw;
-  height:100vh;
+const Loading = styled.section`
+  width: 100vw;
+  height: 100vh;
   margin-top: 67px;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100vw;
   background: #ffffff;
- `
- 
+`;
