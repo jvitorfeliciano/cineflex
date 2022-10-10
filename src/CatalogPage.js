@@ -4,7 +4,7 @@ import loading from "../src/assets/loading.gif";
 import { useEffect, useState } from "react";
 import axios from "axios";
 export default function Catalog() {
-  const [movieVector, setMovieVector] = useState([]);
+  const [movieVector, setMovieVector] = useState(null);
 
   useEffect(() => {
     const promise = axios.get(
@@ -14,29 +14,27 @@ export default function Catalog() {
     promise.catch((res) => console.log(res.response.data));
   }, []);
 
+  if (movieVector === null) {
+    return (
+      <Loading>
+        <img src={loading} alt="loading" />
+      </Loading>
+    );
+  }
   return (
-    <>
-      {movieVector.length === 0 && (
-        <Loading>
-          <img src={loading} />
-        </Loading>
-      )}
-      {movieVector.length != 0 && (
-        <CatalogContainer>
-          <h2>Selecione o filme</h2>
-          <MovieList>
-            {movieVector.map((obj) => (
-              <Movie
-                key={obj.id}
-                img={obj.posterURL}
-                title={obj.title}
-                id={obj.id}
-              />
-            ))}
-          </MovieList>
-        </CatalogContainer>
-      )}
-    </>
+    <CatalogContainer>
+      <h2>Selecione o filme</h2>
+      <MovieList>
+        {movieVector.map((obj) => (
+          <Movie
+            key={obj.id}
+            img={obj.posterURL}
+            title={obj.title}
+            id={obj.id}
+          />
+        ))}
+      </MovieList>
+    </CatalogContainer>
   );
 }
 

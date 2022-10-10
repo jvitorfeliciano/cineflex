@@ -28,7 +28,7 @@ export default function ChooseSeat({ infosPurchase }) {
   if (seats === null) {
     return (
       <Loading>
-        <img src={loading} />
+        <img src={loading} alt="loading"/>
       </Loading>
     );
   }
@@ -85,12 +85,12 @@ export default function ChooseSeat({ infosPurchase }) {
       </ContainerValidation>
       <FooterContainer>
         <figure data-identifier="movie-img-preview">
-          <img src={seats.movie.posterURL} />
+          <img src={seats.movie.posterURL} alt="movieimg"/>
         </figure>
         <span data-identifier="movie-and-session-infos-preview">
           {seats.movie.title}
           <br></br>
-          {seats.day.weekday} - {seats.day.date}- {seats.name}
+          {seats.day.weekday} - {seats.name}
         </span>
       </FooterContainer>
     </>

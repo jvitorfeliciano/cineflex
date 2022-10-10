@@ -24,7 +24,7 @@ export default function Schedule() {
   if (calender === null) {
     return (
       <Loading>
-        <img src={loading} />
+        <img src={loading} alt="loading" />
       </Loading>
     );
   }
@@ -57,7 +57,7 @@ export default function Schedule() {
       </ScheduleContainer>
       <FooterContainer>
         <figure data-identifier="movie-img-preview">
-          <img src={calender.posterURL} />
+          <img src={calender.posterURL} alt="movieimg" />
         </figure>
         <span data-identifier="movie-and-session-infos-preview">
           {calender.title}

@@ -121,6 +121,3 @@ const ContainerConfirm = styled.div`
     margin-top: 20px;
   }
 `;
-const GoHome = styled.button`
-  margin-top: 80px;
-`;
